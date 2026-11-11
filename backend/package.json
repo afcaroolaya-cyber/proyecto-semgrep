@@ -1,0 +1,23 @@
+{
+  "name": "fitzone-backend",
+  "version": "1.0.0",
+  "type": "module",
+  "description": "Sistema de gestion de gimnasio FitZone",
+  "main": "src/index.js",
+  "scripts": {
+    "dev": "nodemon src/index.js",
+    "start": "node src/index.js",
+    "test": "echo \"No hay pruebas configuradas\""
+  },
+  "dependencies": {
+    "bcrypt": "^6.0.0",
+    "cors": "^2.8.0",
+    "dotenv": "^17.0.0",
+    "express": "^5.0.0",
+    "jsonwebtoken": "^9.0.0",
+    "pg": "^8.0.0"
+  },
+  "devDependencies": {
+    "nodemon": "^3.0.0"
+  }
+}
