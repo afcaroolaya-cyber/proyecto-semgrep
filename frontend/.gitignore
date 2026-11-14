@@ -22,11 +22,3 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
-
-# Variables de entorno y archivos privados
-.env
-.env.*
-!.env.example
-
-# Dependencias
-node_modules/

@@ -1,0 +1,299 @@
+
+.dashboard-container {
+  min-height: 100vh;
+  display: flex;
+  background: #0b0d10;
+  color: white;
+  font-family: 'Montserrat', sans-serif;
+}
+
+.sidebar {
+  width: 255px;
+  min-height: 100vh;
+  background: #121619;
+  border-right: 1px solid #252b30;
+  padding: 30px 20px;
+  display: flex;
+  flex-direction: column;
+}
+
+.dashboard-brand {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-size: 22px;
+  font-weight: 900;
+  margin-bottom: 55px;
+}
+
+.dashboard-brand > span:last-child > span {
+  color: #b5f23c;
+}
+
+.brand-icon {
+  background: #b5f23c;
+  color: #101010;
+  padding: 9px 13px;
+  border-radius: 8px;
+}
+
+.menu-title {
+  color: #697078;
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: 2px;
+  margin-bottom: 18px;
+}
+
+.sidebar-menu {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.menu-item {
+  padding: 14px;
+  display: flex;
+  gap: 13px;
+  align-items: center;
+  background: transparent;
+  color: #a5abb1;
+  border: none;
+  border-radius: 8px;
+  text-align: left;
+  cursor: pointer;
+  font-size: 13px;
+}
+
+.menu-item span {
+  font-size: 19px;
+}
+
+.menu-item:hover,
+.menu-item.active {
+  background: #27321c;
+  color: #b5f23c;
+}
+
+.logout-button {
+  margin-top: auto;
+  padding: 14px;
+  background: transparent;
+  border: 1px solid #333b40;
+  color: #ff7777;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+.dashboard-main {
+  flex: 1;
+  min-width: 0;
+  padding: 35px;
+}
+
+.dashboard-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 20px;
+  margin-bottom: 35px;
+}
+
+.dashboard-header h1 {
+  font-size: 27px;
+  margin-bottom: 8px;
+}
+
+.dashboard-header p {
+  color: #858d94;
+  font-size: 12px;
+}
+
+.user-profile {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.user-avatar {
+  background: #b5f23c;
+  color: #111;
+  width: 43px;
+  height: 43px;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  font-weight: 900;
+}
+
+.user-profile strong,
+.user-profile span {
+  display: block;
+  font-size: 12px;
+}
+
+.user-profile span {
+  color: #b5f23c;
+  margin-top: 5px;
+}
+
+.welcome-banner {
+  padding: 35px;
+  background: linear-gradient(110deg, #28351b, #151b13);
+  border: 1px solid #465c2b;
+  border-radius: 13px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 30px;
+}
+
+.welcome-banner span {
+  color: #b5f23c;
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: 2px;
+}
+
+.welcome-banner h2 {
+  font-size: 27px;
+  margin: 14px 0 8px;
+}
+
+.welcome-banner p {
+  color: #aeb5a5;
+  font-size: 12px;
+}
+
+.banner-icon {
+  font-size: 65px;
+}
+
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 18px;
+}
+
+.stat-card {
+  background: #15191d;
+  border: 1px solid #292f34;
+  border-radius: 12px;
+  padding: 23px;
+}
+
+.stat-icon {
+  font-size: 25px;
+  margin-bottom: 20px;
+}
+
+.stat-card > span {
+  color: #a0a7ad;
+  font-size: 12px;
+}
+
+.stat-card h3 {
+  font-size: 30px;
+  margin: 12px 0;
+}
+
+.stat-card small {
+  color: #747d84;
+  font-size: 10px;
+}
+
+.status-online {
+  color: #b5f23c;
+  font-size: 22px !important;
+}
+
+.dashboard-bottom {
+  margin-top: 35px;
+}
+
+.dashboard-bottom h2 {
+  font-size: 18px;
+  margin-bottom: 20px;
+}
+
+.quick-access {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 18px;
+}
+
+.quick-access button {
+  background: #15191d;
+  border: 1px solid #292f34;
+  border-radius: 12px;
+  padding: 22px;
+  color: white;
+  text-align: left;
+  cursor: pointer;
+}
+
+.quick-access button:hover {
+  border-color: #b5f23c;
+}
+
+.quick-access button span,
+.quick-access button strong,
+.quick-access button small {
+  display: block;
+}
+
+.quick-access button span {
+  font-size: 25px;
+  margin-bottom: 15px;
+}
+
+.quick-access button strong {
+  font-size: 13px;
+  margin-bottom: 8px;
+}
+
+.quick-access button small {
+  color: #858d94;
+  font-size: 11px;
+}
+
+@media (max-width: 1000px) {
+  .stats-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 650px) {
+  .sidebar {
+    width: 75px;
+    padding: 20px 10px;
+  }
+
+  .dashboard-brand {
+    justify-content: center;
+    font-size: 0;
+  }
+
+  .menu-title,
+  .menu-item {
+    font-size: 0;
+  }
+
+  .menu-item {
+    justify-content: center;
+  }
+
+  .dashboard-main {
+    padding: 20px 12px;
+  }
+
+  .stats-grid,
+  .quick-access {
+    grid-template-columns: 1fr;
+  }
+
+  .dashboard-header {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+}

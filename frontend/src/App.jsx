@@ -1,122 +1,215 @@
-import { useState } from 'react'
-import heroImg from './assets/hero.png'
-import reactLogo from './assets/react.svg'
-import viteLogo from './assets/vite.svg'
-import './App.css'
 
-function App() {
-  const [count, setCount] = useState(0)
+import { useState } from 'react';
+import { Routes, Route, Navigate, useNavigate } from 'react-router-dom';
+import api from './services/api';
+import Dashboard from './pages/Dashboard';
+import ProtectedRoute from './components/ProtectedRoute';
+import './App.css';
+
+function Login() {
+  const navigate = useNavigate();
+
+  const [mostrarRegistro, setMostrarRegistro] = useState(false);
+  const [correo, setCorreo] = useState('');
+  const [password, setPassword] = useState('');
+  const [error, setError] = useState('');
+  const [mensaje, setMensaje] = useState('');
+  const [cargando, setCargando] = useState(false);
+
+  const iniciarSesion = async (e) => {
+    e.preventDefault();
+
+    setError('');
+    setMensaje('');
+
+    if (mostrarRegistro) {
+      setError('El registro lo conectaremos próximamente.');
+      return;
+    }
+
+    try {
+      setCargando(true);
+
+      const respuesta = await api.post('/auth/login', {
+        correo,
+        password
+      });
+
+      const { token, usuario } = respuesta.data;
+
+      if (usuario.rol !== 'admin') {
+        setError('Tu cuenta no tiene permisos para acceder al panel administrativo.');
+        return;
+      }
+
+      localStorage.setItem('token', token);
+      localStorage.setItem('usuario', JSON.stringify(usuario));
+
+      navigate('/dashboard');
+
+    } catch (err) {
+      setError(
+        err.response?.data?.message ||
+        'No se pudo conectar con el servidor.'
+      );
+    } finally {
+      setCargando(false);
+    }
+  };
 
   return (
-    <>
-      <section id="center">
-        <div className="hero">
-          <img src={heroImg} className="base" width="170" height="179" alt="" />
-          <img src={reactLogo} className="framework" alt="React logo" />
-          <img src={viteLogo} className="vite" alt="Vite logo" />
+    <main className="login-container">
+      <section className="login-info">
+        <div className="brand">
+          <span className="brand-icon">F</span>
+          <span>FIT<span className="brand-highlight">ZONE</span></span>
         </div>
-        <div>
-          <h1>Get started</h1>
+
+        <div className="info-content">
+          <span className="tagline">
+            TU MEJOR VERSION COMIENZA AQUI
+          </span>
+
+          <h1>
+            ENTRENA DURO.<br />
+            <span>SUPERA TUS LIMITES.</span>
+          </h1>
+
           <p>
-            Edit <code>src/App.jsx</code> and save to test <code>HMR</code>
+            Alcanza tus objetivos, mejora tu rendimiento
+            y transforma tu estilo de vida con FitZone.
           </p>
         </div>
-        <button
-          type="button"
-          className="counter"
-          onClick={() => setCount((count) => count + 1)}
-        >
-          Count is {count}
-        </button>
-      </section>
 
-      <div className="ticks"></div>
-
-      <section id="next-steps">
-        <div id="docs">
-          <svg className="icon" role="presentation" aria-hidden="true">
-            <use href="/icons.svg#documentation-icon"></use>
-          </svg>
-          <h2>Documentation</h2>
-          <p>Your questions, answered</p>
-          <ul>
-            <li>
-              <a href="https://vite.dev/" target="_blank">
-                <img className="logo" src={viteLogo} alt="" />
-                Explore Vite
-              </a>
-            </li>
-            <li>
-              <a href="https://react.dev/" target="_blank">
-                <img className="button-icon" src={reactLogo} alt="" />
-                Learn more
-              </a>
-            </li>
-          </ul>
-        </div>
-        <div id="social">
-          <svg className="icon" role="presentation" aria-hidden="true">
-            <use href="/icons.svg#social-icon"></use>
-          </svg>
-          <h2>Connect with us</h2>
-          <p>Join the Vite community</p>
-          <ul>
-            <li>
-              <a href="https://github.com/vitejs/vite" target="_blank">
-                <svg
-                  className="button-icon"
-                  role="presentation"
-                  aria-hidden="true"
-                >
-                  <use href="/icons.svg#github-icon"></use>
-                </svg>
-                GitHub
-              </a>
-            </li>
-            <li>
-              <a href="https://chat.vite.dev/" target="_blank">
-                <svg
-                  className="button-icon"
-                  role="presentation"
-                  aria-hidden="true"
-                >
-                  <use href="/icons.svg#discord-icon"></use>
-                </svg>
-                Discord
-              </a>
-            </li>
-            <li>
-              <a href="https://x.com/vite_js" target="_blank">
-                <svg
-                  className="button-icon"
-                  role="presentation"
-                  aria-hidden="true"
-                >
-                  <use href="/icons.svg#x-icon"></use>
-                </svg>
-                X.com
-              </a>
-            </li>
-            <li>
-              <a href="https://bsky.app/profile/vite.dev" target="_blank">
-                <svg
-                  className="button-icon"
-                  role="presentation"
-                  aria-hidden="true"
-                >
-                  <use href="/icons.svg#bluesky-icon"></use>
-                </svg>
-                Bluesky
-              </a>
-            </li>
-          </ul>
+        <div className="info-footer">
+          <span>FUERZA</span>
+          <span>DISCIPLINA</span>
+          <span>RESULTADOS</span>
         </div>
       </section>
 
-      <div className="ticks"></div>
-      <section id="spacer"></section>
-    </>
-  )
+      <section className="login-form-section">
+        <div className="login-card">
+          <div className="mobile-brand">
+            FIT<span>ZONE</span>
+          </div>
+
+          <span className="welcome-label">
+            BIENVENIDO A FITZONE
+          </span>
+
+          <h2>
+            {mostrarRegistro ? 'Crea tu cuenta' : 'Inicia sesión'}
+          </h2>
+
+          <p className="form-description">
+            {mostrarRegistro
+              ? 'Regístrate y comienza tu transformación.'
+              : 'Ingresa tus datos para continuar.'}
+          </p>
+
+          <form onSubmit={iniciarSesion}>
+            {mostrarRegistro && (
+              <div className="input-group">
+                <label>Nombre completo</label>
+                <input
+                  type="text"
+                  placeholder="Tu nombre"
+                  required
+                />
+              </div>
+            )}
+
+            <div className="input-group">
+              <label>Correo electrónico</label>
+              <input
+                type="email"
+                placeholder="ejemplo@correo.com"
+                value={correo}
+                onChange={(e) => setCorreo(e.target.value)}
+                required
+              />
+            </div>
+
+            <div className="input-group">
+              <label>Contraseña</label>
+              <input
+                type="password"
+                placeholder="Ingresa tu contraseña"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                required
+              />
+            </div>
+
+            {error && (
+              <p style={{ color: '#ff6262', marginBottom: '15px' }}>
+                {error}
+              </p>
+            )}
+
+            {mensaje && (
+              <p style={{ color: '#b5f23c', marginBottom: '15px' }}>
+                {mensaje}
+              </p>
+            )}
+
+            <button
+              type="submit"
+              className="login-button"
+              disabled={cargando}
+            >
+              {cargando
+                ? 'VERIFICANDO...'
+                : mostrarRegistro
+                  ? 'CREAR CUENTA'
+                  : 'INICIAR SESIÓN'}
+            </button>
+          </form>
+
+          <div className="form-switch">
+            {mostrarRegistro
+              ? '¿Ya tienes una cuenta?'
+              : '¿Todavía no tienes una cuenta?'}
+
+            <button
+              type="button"
+              onClick={() => {
+                setMostrarRegistro(!mostrarRegistro);
+                setError('');
+                setMensaje('');
+              }}
+            >
+              {mostrarRegistro ? 'Inicia sesión' : 'Regístrate'}
+            </button>
+          </div>
+        </div>
+
+        <span className="copyright">
+          © 2026 FITZONE. TODOS LOS DERECHOS RESERVADOS.
+        </span>
+      </section>
+    </main>
+  );
 }
 
-export default App
+function App() {
+  return (
+    <Routes>
+      <Route path="/" element={<Login />} />
+
+      <Route
+        path="/dashboard"
+        element={
+          <ProtectedRoute>
+            <Dashboard />
+          </ProtectedRoute>
+        }
+      />
+
+      <Route path="*" element={<Navigate to="/" replace />} />
+    </Routes>
+  );
+}
+
+export default App;
